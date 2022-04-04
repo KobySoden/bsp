@@ -46,7 +46,6 @@ void surfer()
         fin_locker_count -= 2; // remove two fins
         my_fin_count = 2;
       }
-      
       omp_unset_lock(&fin_locker_lock); // make locker available again
       usleep(50); // have a refreshing beverage
     } //end while waiting for 2 fins
@@ -58,8 +57,9 @@ void surfer()
     usleep(100); // use this line to simulate surfing time
 
     omp_set_lock(&fin_locker_lock); //Wait for access to the fin locker
- 
-    fin_locker_count -= 2; // return fins
+	
+	//this is where the bug was 
+    fin_locker_count += 2; // return fins
     my_fin_count = 0;
     
     omp_unset_lock(&fin_locker_lock);
