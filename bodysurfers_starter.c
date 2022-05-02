@@ -17,13 +17,13 @@
 #include <unistd.h>     //Use usleep (sleep for a number of microseconds)
 
 #define NUM_SURFERS 5     //The number of bodysurfers
-#define NUM_WAVES 50000 //The number of waves per bodysurfer
+#define NUM_WAVES 5000 //The number of waves per bodysurfer
 
 static omp_lock_t fin_locker_lock; //Lock to represent the fin locker lock
 static int fin_locker_count=0; // the number of fins in the locker
+//static int entropy=0;
 
-
-void surfer()
+int surfer()
 {
   //Wait for all threads to start
   #pragma omp barrier
@@ -31,7 +31,8 @@ void surfer()
   //Set up variables for the thread id and fins.
   int surfer_id = omp_get_thread_num();
   int my_fin_count = 0;
-
+  
+  int entropy = 0;
   // We will count our waves to determine when we're too tired 
   int wave_count;
   for(wave_count = 0; wave_count < NUM_WAVES; wave_count++)
@@ -45,7 +46,7 @@ void surfer()
       {
         fin_locker_count -= 2; // remove two fins
         my_fin_count = 2;
-      }
+      }else entropy++;
       omp_unset_lock(&fin_locker_lock); // make locker available again
       usleep(50); // have a refreshing beverage
     } //end while waiting for 2 fins
@@ -66,6 +67,7 @@ void surfer()
     usleep(50); // after surf rest is important
   } //end wave count
   printf("\n                      phil %d exhausted \n",surfer_id);
+  return entropy;
 } // end surfer
 
 
@@ -73,7 +75,8 @@ void surfer()
 int main(int argc, char ** argv)
 {
   double elapsed_time;
-
+  
+  int entropy = 0;
   //Initialize fin locker lock
 
   omp_init_lock(&fin_locker_lock);
@@ -86,7 +89,7 @@ int main(int argc, char ** argv)
   //Create and start bodysurfer threads.
   #pragma omp parallel num_threads(NUM_SURFERS)
   {
-    surfer();
+    entropy ^= surfer();
   }
 
   //Wait for bodysurfers to finish then destroy fin locker lock
@@ -94,7 +97,7 @@ int main(int argc, char ** argv)
 
   elapsed_time = omp_get_wtime() - elapsed_time;
   printf("Elapsed time: %f\n",elapsed_time);
-
+  printf("Entropy value: %d\n", entropy);
   //End program and check out the bonfire
   return 0;
 }
