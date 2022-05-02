@@ -1,10 +1,13 @@
 import sys
+import math
 
 vals = []
 for i in range(38):
     vals.append(0)
 
 def middle_squares(seed, x):
+    seed = abs(int(seed))
+    print(seed)
     n = len(str(seed))
     if n % 2 != 0:
         seed = int(str(seed)[1:])
@@ -15,9 +18,9 @@ def middle_squares(seed, x):
         a = n // 2
         b = a + n
         seed = int(str(squared)[a:b])
-        print(seed % 38)
+        #print(seed % 38)
         vals[seed % 38] += 1
 
-middle_squares(sys.argv[1], 1000)
+middle_squares(sys.argv[1], 100)
 
 print(vals)

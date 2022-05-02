@@ -1,5 +1,10 @@
 #!/bin/bash
 
-#./surf | read rand
-rand=$(./surf)
-echo $rand
+#get seed value
+seed=$(./surf)
+
+#get random numbers
+python randomizer.py $seed
+
+
+
