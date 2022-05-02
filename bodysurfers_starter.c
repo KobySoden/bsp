@@ -15,9 +15,11 @@
 #include <omp.h>        //Use OpenMP
 #include <stdio.h>      //Provide I/O
 #include <unistd.h>     //Use usleep (sleep for a number of microseconds)
+#include <stdint.h>
+#include <stdlib.h>
 
 #define NUM_SURFERS 5     //The number of bodysurfers
-#define NUM_WAVES 5000 //The number of waves per bodysurfer
+#define NUM_WAVES 500 //The number of waves per bodysurfer
 
 static omp_lock_t fin_locker_lock; //Lock to represent the fin locker lock
 static int fin_locker_count=0; // the number of fins in the locker
@@ -47,14 +49,15 @@ int surfer()
         fin_locker_count -= 2; // remove two fins
         my_fin_count = 2;
       }else entropy++;
-      omp_unset_lock(&fin_locker_lock); // make locker available again
+      
+	  omp_unset_lock(&fin_locker_lock); // make locker available again
       usleep(50); // have a refreshing beverage
     } //end while waiting for 2 fins
 
 // Cowabunga
 
-      if((wave_count%1000)==0) // comment this line out for short runs
-	printf("phil %d is surfing wave %20d\r", surfer_id,wave_count);
+  //    if((wave_count%1000)==0) // comment this line out for short runs
+//	printf("phil %d is surfing wave %20d\r", surfer_id,wave_count);
     usleep(100); // use this line to simulate surfing time
 
     omp_set_lock(&fin_locker_lock); //Wait for access to the fin locker
@@ -66,7 +69,7 @@ int surfer()
     omp_unset_lock(&fin_locker_lock);
     usleep(50); // after surf rest is important
   } //end wave count
-  printf("\n                      phil %d exhausted \n",surfer_id);
+ //printf("\n                      phil %d exhausted \n",surfer_id);
   return entropy;
 } // end surfer
 
@@ -76,7 +79,7 @@ int main(int argc, char ** argv)
 {
   double elapsed_time;
   
-  int entropy = 0;
+  int entropy = 1;
   //Initialize fin locker lock
 
   omp_init_lock(&fin_locker_lock);
@@ -89,15 +92,18 @@ int main(int argc, char ** argv)
   //Create and start bodysurfer threads.
   #pragma omp parallel num_threads(NUM_SURFERS)
   {
-    entropy ^= surfer();
+    entropy *= surfer();
   }
 
   //Wait for bodysurfers to finish then destroy fin locker lock
   omp_destroy_lock(&fin_locker_lock);
 
   elapsed_time = omp_get_wtime() - elapsed_time;
-  printf("Elapsed time: %f\n",elapsed_time);
-  printf("Entropy value: %d\n", entropy);
+  //printf("Elapsed time: %f\n",elapsed_time);
+  
+   
+  
+  printf("%d\n", entropy);
   //End program and check out the bonfire
   return 0;
 }
