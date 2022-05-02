@@ -7,7 +7,7 @@ for i in range(38):
 
 def middle_squares(seed, x):
     seed = abs(int(seed))
-    print(seed)
+    #print(seed)
     n = len(str(seed))
     if n % 2 != 0:
         seed = int(str(seed)[1:])
