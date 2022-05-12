@@ -1,12 +1,27 @@
 import sys
 import os
 
+#debug
+print(os.path.abspath(str(__file__)))
+print(os.environ['MONEY'])
 class Roulette():
     def __init__(self):
-        self.numbers = sys.argv[1].replace("[","").replace("]","").replace(" ","").split(",")
+        self.numbers = []
+        for i in range(1,len(sys.argv)):
+            #print(i)
+            #print(sys.argv[i])
+            val = sys.argv[i]
+            val = val.replace(",", "") 
+            val = val.replace("[", "")
+            val = val.replace("]", "")
+            self.numbers.append(int(val))
+        
+        #self.numbers = sys.argv[1:-1].replace("[","").replace("]","").replace(" ","").split(",")
+       # print(self.numbers)
+
         for i in range(len(self.numbers)):
             self.numbers[i] = int(self.numbers[i])
-        self.money = int(sys.argv[2])
+        self.money = int(sys.argv[-1])
         if sys.argv[3] == "1":
             self.firstrun = True
         else:
@@ -136,7 +151,8 @@ class Roulette():
     def exit(self, cont):
         if not cont:
             print("Thanks for playing!")
-            os.environ["MONEY"] = 0
+            print(self.money)
+            os.environ["MONEY"] = str(self.money)
         else:
             os.environ["MONEY"] = str(self.money)
     

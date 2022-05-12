@@ -25,9 +25,12 @@ while [ $money -gt 0 ]
 do
 	get_random_numbers
 		
-	echo $numbers
+	#echo $numbers
+	MONEY=$money
 	#python roullete goes here 
-	money=0	
+	python roulette.py $numbers 10	
+	
+	echo $MONEY
 	#if user wants to stop playing
 	#break
 
@@ -35,9 +38,9 @@ done
 
 #goodbye message
 echo "Thanks for playing!"
-echo "You finished with $money dollars"
+echo "You finished with $MONEY dollars"
 
 
 #random tests
-export MONEY='4'
+#export MONEY='4'
 printenv | grep MONEY
