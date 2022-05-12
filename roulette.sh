@@ -19,7 +19,11 @@ echo "How much money would you like to play with?"
 #read in money from user
 read money
 echo "You are playing with $money dollars"
-
+echo "You are playing with $money dollars"
+echo "In case you don't know, here are your odds!"
+echo "Betting on red/black or even/odd pays 1 to 1."
+echo "Betting on green pays 17 to 1."
+echo "Betting on an individual number pays 35 to 1."
 #while loop for python game
 #first run
 while [ $money -gt 0 ]

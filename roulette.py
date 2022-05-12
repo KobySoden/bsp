@@ -26,10 +26,6 @@ class Roulette():
         self.reds = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]
         self.blacks = [2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35]
         self.greens = [0,37]
-        print("In case you don't know, here are your odds!")
-        print("Betting on red/black or even/odd pays 1 to 1.")
-        print("Betting on green pays 17 to 1.")
-        print("Betting on an individual number pays 35 to 1.")
         if self.firstrun:
             self.welcome()
         else:
