@@ -34,10 +34,10 @@ class Roulette():
     def welcome(self):
         print("Welcome to Team D's Roulette Game!")
         print("You'll start with $100 to play with.")
-        inp = input("Type 1 to see the betting odds, or type 2 to begin the game.")
+        inp = input("Type 1 to see the betting odds, or type 2 to begin the game. ")
         while inp not in ["1", "2"]:
             print("Please input a 1 or a 2.")
-            inp = input("Type 1 to see the betting odds, or type 2 to begin the game.")
+            inp = input("Type 1 to see the betting odds, or type 2 to begin the game. ")
         if inp == "1":
             print("Betting on red/black or even/odd pays 1 to 1.")
             print("Betting on green pays 17 to 1.")
@@ -45,24 +45,24 @@ class Roulette():
         else:
             self.spin()
             return
-        inp = input("Begin game?: y/n")
+        inp = input("Begin game?: y/n ")
         while inp not in ["y", "n"]:
-            inp = input("Begin game?: y/n")
+            inp = input("Begin game?: y/n ")
         if inp == "y":
             self.spin()
         else:
             self.exit(False)
     def spin(self):
         print("You have $" + str(self.money) + " remaining.")
-        inp = input("Type 1 to bet on a color, 2 to bet on even/odd, or 3 to bet on an individual number.")
+        inp = input("Type 1 to bet on a color, 2 to bet on even/odd, or 3 to bet on an individual number. ")
         while inp not in ["1", "2", "3"]:
             print("Please input 1, 2, or 3.")
-            inp = input("Type 1 to bet on a color, 2 to bet on even/odd, or 3 to bet on an individual number.")
+            inp = input("Type 1 to bet on a color, 2 to bet on even/odd, or 3 to bet on an individual number. ")
         if inp == "1":
-            inp = input("Type 1 to bet on red, 2 to bet on black, or 3 to bet on green.")
+            inp = input("Type 1 to bet on red, 2 to bet on black, or 3 to bet on green. ")
             while inp not in ["1", "2", "3"]:
                 print("Please input 1, 2, or 3.")
-                inp = input("Type 1 to bet on red, 2 to bet on black, or 3 to bet on green.")
+                inp = input("Type 1 to bet on red, 2 to bet on black, or 3 to bet on green. ")
             bet = self.getbet()
             print("Spinning...")
             spin_result = self.numbers.pop()
@@ -77,10 +77,10 @@ class Roulette():
                 print("You lose.")
                 self.money -= int(bet)
         elif inp == "2":
-            inp = input("Type 1 to bet on even or 2 to bet on odd.")
+            inp = input("Type 1 to bet on even or 2 to bet on odd. ")
             while inp not in ["1","2"]:
                 print("Please input 1 or 2.")
-                inp = input("Type 1 to bet on even or 2 to bet on odd.")
+                inp = input("Type 1 to bet on even or 2 to bet on odd. ")
             bet = self.getbet()
             print("Spinning...")
             spin_result = self.numbers.pop()
@@ -99,14 +99,14 @@ class Roulette():
                 print("You lose.")
                 self.money -= int(bet)
         elif inp == "3":
-            inp = input("Please type the number you would like to bet on.")
+            inp = input("Please type the number you would like to bet on. ")
             legal_inputs = list(range(0, 38))
             for i in range(len(legal_inputs)):
                 legal_inputs[i] = str(legal_inputs[i])
             legal_inputs.append("00")
             while inp not in legal_inputs:
                 print("Please input a number from 0 to 36 including 00.")
-                inp = input("Please type the number you would like to bet on.")
+                inp = input("Please type the number you would like to bet on. ")
             if inp == "00":
                 inp = "37"
             bet = self.getbet()
@@ -134,15 +134,15 @@ class Roulette():
             else:
                 self.spin()
     def getbet(self):
-        bet = input("How much would you like to bet?")
+        bet = input("How much would you like to bet? ")
         valid_bet = False
         while not valid_bet:
             if not bet.isnumeric():
                 print("Please input a number.")
-                bet = input("How much would you like to bet?")
+                bet = input("How much would you like to bet? ")
             elif int(bet) > self.money:
                 print("Please input a number less than or equal to your current balance ($", self.money, ")")
-                bet = input("How much would you like to bet?")
+                bet = input("How much would you like to bet? ")
             else:
                 valid_bet = True
         return int(bet)
