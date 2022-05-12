@@ -21,26 +21,23 @@ read money
 echo "You are playing with $money dollars"
 
 #while loop for python game
+#first run
 while [ $money -gt 0 ]
 do
 	get_random_numbers
 		
-	#echo $numbers
-	MONEY=$money
 	#python roullete goes here 
-	python roulette.py $numbers 10	
+	python roulette.py $numbers $money 0	
 	
-	echo $MONEY
-	#if user wants to stop playing
-	#break
+	money=$(cat tmp)
 
 done 
 
 #goodbye message
-echo "Thanks for playing!"
-echo "You finished with $MONEY dollars"
+#echo "Thanks for playing!"
+#echo "You finished with $MONEY dollars"
 
 
 #random tests
 #export MONEY='4'
-printenv | grep MONEY
+#printenv | grep MONEY
