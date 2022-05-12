@@ -1,12 +1,14 @@
 #!/bin/bash
 
+echo "Testing our random number generator"
 
 for ((i=0; i<1000; i++))
 	do
-	#get seed value
+	echo "Generating seed value"
 	seed=$(./surf)
 
 	#get random numbers
+	echo "Generating random numbers"
 	numbers=$(python randomizer_test.py $seed)
 	
 	#print out responses
