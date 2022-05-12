@@ -9,16 +9,18 @@ for i in range(1,len(sys.argv)):
     val = val.replace("[", "")
     val = val.replace("]", "")
     numbers.append(int(val))
+try:
+    f = open("test.txt", "r")
+    lines = f.readlines()
 
-f = open("test.txt", "r")
-lines = f.readlines()
-
-position = 0
-for i in lines:
-    val=i.replace("\n", "");
-    numbers[position] += int(val)
-    position+=1
-f.close()
+    position = 0
+    for i in lines:
+        val=i.replace("\n", "");
+        numbers[position] += int(val)
+        position+=1
+    f.close()
+except:
+    pass
 
 f = open("test.txt", "w")
 for i in numbers:
